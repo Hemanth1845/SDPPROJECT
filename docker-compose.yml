@@ -1,3 +1,5 @@
+version: "3.8"
+
 services:
   mysqldb:
     image: mysql:8
@@ -13,6 +15,7 @@ services:
       - springboot-mysql-net
 
   backend:
+    build: ./backend
     image: hemanth1845/docker-backend:latest
     container_name: springboot
     ports:
@@ -24,6 +27,7 @@ services:
       - springboot-mysql-net
 
   frontend:
+    build: ./frontend
     image: hemanth1845/docker-frontend:latest
     container_name: react
     ports:

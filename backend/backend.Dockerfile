@@ -1,27 +1,14 @@
-# Stage 1: Build the Vite app
-FROM node:18 AS build
+# Use official OpenJDK image
+FROM openjdk:17-jdk-slim
 
-# Set working directory
+# Set workdir
 WORKDIR /app
 
-# Copy package.json and install dependencies
-COPY package*.json ./
-RUN npm install
+# Copy jar from target (after mvn package or gradle build)
+COPY target/*.jar app.jar
 
-# Copy all project files
-COPY . .
+# Expose backend port
+EXPOSE 2000
 
-# Build the Vite app (output goes to /app/dist)
-RUN npm run build
-
-# Stage 2: Serve with Nginx
-FROM nginx:alpine
-
-# Copy built files from stage 1
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# Expose port 80
-EXPOSE 80
-
-# Start Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Run Spring Boot app
+ENTRYPOINT ["java", "-jar", "app.jar"]
