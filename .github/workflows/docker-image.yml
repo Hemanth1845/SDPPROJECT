@@ -27,7 +27,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./backend
-          file: ./backend/backend.Dockerfile
+          file: ./backend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/docker-backend:latest
 
@@ -35,6 +35,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: ./frontend
-          file: ./frontend/frontend.Dockerfile
+          file: ./frontend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/docker-frontend:latest
