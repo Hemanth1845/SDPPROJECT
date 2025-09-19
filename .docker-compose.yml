@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  # The Backend Service (Spring Boot)
+  backend:
+    build:
+      context: ./backend # Path to the backend code and Dockerfile
+      dockerfile: Dockerfile
+    image: hemanth1845/crm-backend # The name for your backend image on Docker Hub
+    ports:
+      - "8080:8080" # Map host port 8080 to container port 8080
+    environment:
+      # These are example environment variables.
+      # You should use a .env file for sensitive data in a real project.
+      - SPRING_MAIL_HOST=smtp.gmail.com
+      - SPRING_MAIL_PORT=587
+      - SPRING_MAIL_USERNAME=${SPRING_MAIL_USERNAME} # Example of using secrets
+      - SPRING_MAIL_PASSWORD=${SPRING_MAIL_PASSWORD} # Example of using secrets
+      - JWT_SECRET=${JWT_SECRET} # Example of using secrets
+    networks:
+      - crm-network
+
+  # The Frontend Service (React + Nginx)
+  frontend:
+    build:
+      context: ./frontend # Path to the frontend code and Dockerfile
+      dockerfile: Dockerfile
+    image: hemanth1845/crm-frontend # The name for your frontend image on Docker Hub
+    ports:
+      - "5173:80" # Map host port 5173 to Nginx's port 80 in the container
+    depends_on:
+      - backend # This ensures the backend starts before the frontend
+    networks:
+      - crm-network
+
+# Defines the network that allows containers to communicate
+networks:
+  crm-network:
+    driver: bridge
