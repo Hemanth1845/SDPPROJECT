@@ -1,24 +1,27 @@
-# Stage 1: Build the app
-FROM eclipse-temurin:21-jdk AS builder
+# Stage 1: Build the Vite app
+FROM node:18 AS build
 
+# Set working directory
 WORKDIR /app
 
-COPY mvnw .          
-COPY .mvn/ .mvn
-COPY pom.xml ./
-COPY src ./src
+# Copy package.json and install dependencies
+COPY package*.json ./
+RUN npm install
 
-# Give execute permission for mvnw
-RUN chmod +x mvnw
+# Copy all project files
+COPY . .
 
-RUN ./mvnw clean package -DskipTests
+# Build the Vite app (output goes to /app/dist)
+RUN npm run build
 
-# Stage 2: Run the app
-FROM eclipse-temurin:21-jdk
+# Stage 2: Serve with Nginx
+FROM nginx:alpine
 
-WORKDIR /app
-COPY --from=builder /app/target/*.jar app.jar
+# Copy built files from stage 1
+COPY --from=build /app/dist /usr/share/nginx/html
 
-EXPOSE 2000
+# Expose port 80
+EXPOSE 80
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]
