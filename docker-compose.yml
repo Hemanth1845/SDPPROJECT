@@ -16,13 +16,12 @@ services:
 
   backend:
     build:
-      context: ./backend
-      # Correction: Specify the Dockerfile name and location
-      dockerfile: backend.Dockerfile
+      context: ./backend/CRMApplication # <-- UPDATED LINE
+      dockerfile: ../backend.Dockerfile   # <-- UPDATED LINE
     image: hemanth1845/crm-backend
     container_name: crm-backend-container
     ports:
-      - "2025:2020" # Exposing backend on host port 2025
+      - "2025:2020"
     depends_on:
       - mysql-db
     environment:
@@ -38,12 +37,11 @@ services:
   frontend:
     build:
       context: ./frontend
-      # Correction: Specify the Dockerfile name and location
       dockerfile: frontend.Dockerfile
     image: hemanth1845/crm-frontend
     container_name: crm-frontend-container
     ports:
-      - "5173:80" # Exposing frontend on host port 5173
+      - "5173:80"
     depends_on:
       - backend
     networks:
