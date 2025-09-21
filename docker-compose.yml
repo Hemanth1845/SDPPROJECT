@@ -41,7 +41,7 @@ services:
     image: hemanth1845/crm-frontend
     container_name: crm-frontend-container
     ports:
-      - "5173:80"
+      - "4000:80"
     depends_on:
       - backend
     networks:
