@@ -1,22 +1,35 @@
 package com.crm.service.impl;
 
-import com.crm.exception.ResourceNotFoundException;
-import com.crm.model.*;
-import com.crm.model.User.UserStatus;
-import com.crm.repository.*;
-import com.crm.service.AdminService;
-import com.crm.service.EmailService;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import com.crm.exception.ResourceNotFoundException;
+import com.crm.model.CustomerCampaign;
+import com.crm.model.EmailCampaign;
+import com.crm.model.Interaction;
+import com.crm.model.Notification;
+import com.crm.model.Role;
+import com.crm.model.Settings;
+import com.crm.model.User;
+import com.crm.model.User.UserStatus;
+import com.crm.repository.CustomerCampaignRepository;
+import com.crm.repository.EmailCampaignRepository;
+import com.crm.repository.InteractionRepository;
+import com.crm.repository.NotificationRepository;
+import com.crm.repository.SettingsRepository;
+import com.crm.repository.UserRepository;
+import com.crm.service.AdminService;
+import com.crm.service.EmailService;
 
 @Service
 @Transactional
@@ -65,7 +78,7 @@ public class AdminServiceImpl implements AdminService {
                "<div class='container'>" +
                "  <div class='header'>" +
                // **MODIFIED**: Using a professional and working image link
-               "    <img src='https://i.imgur.com/5Q2F2Hq.png' alt='Account Approved'>" +
+               "    <img src='https://as1.ftcdn.net/v2/jpg/16/07/34/92/1000_F_1607349241_x3OKhb7Yk3A1pnz5zwf5GCASxyCVTPNE.jpg' alt='Account Approved'>" +
                "    <h1>Welcome Aboard!</h1>" +
                "  </div>" +
                "  <div class='content'>" +
@@ -144,8 +157,17 @@ public class AdminServiceImpl implements AdminService {
         
         String customerEmail = customer.getEmail();
         userRepository.delete(customer);
+
+        String htmlContent = "<html>"
+        + "<body>"
+        + "<h2>Account Update</h2>"
+        + "<p>We regret to inform you that your registration for the CRM Portal has been rejected.</p>"
+        + "<img src='https://as1.ftcdn.net/v2/jpg/16/07/34/92/1000_F_1607349241_x3OKhb7Yk3A1pnz5zwf5GCASxyCVTPNE.jpg' "
+        + "alt='Rejected' width='400'/>"
+        + "</body>"
+        + "</html>";
         
-        emailService.sendSimpleMessage(customerEmail, "Account Update", "We regret to inform you that your registration for the CRM Portal has been rejected.");
+        emailService.sendSimpleMessage(customerEmail, "Account Update", htmlContent);
     }
 
     @Override
