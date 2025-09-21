@@ -5,6 +5,8 @@ on:
     branches:
       - main
   pull_request:
+    branches:
+      - main
 
 jobs:
   build-and-push:
@@ -29,7 +31,7 @@ jobs:
           context: ./backend
           file: ./backend/backend.Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/docker-backend:latest
+          tags: hemanth1845/crm-backend:latest
 
       - name: Build and push frontend image
         uses: docker/build-push-action@v5
@@ -37,4 +39,5 @@ jobs:
           context: ./frontend
           file: ./frontend/frontend.Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/docker-frontend:latest
+          tags: hemanth1845/crm-frontend:latest
+

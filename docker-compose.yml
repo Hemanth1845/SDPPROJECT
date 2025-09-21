@@ -1,0 +1,57 @@
+version: '3.8'
+
+services:
+  mysql-db:
+    image: mysql:8
+    container_name: crm-mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: crm_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - crm-network
+
+  backend:
+    build:
+      context: ./backend
+      # Correction: Specify the Dockerfile name and location
+      dockerfile: backend.Dockerfile
+    image: hemanth1845/crm-backend
+    container_name: crm-backend-container
+    ports:
+      - "2025:2020" # Exposing backend on host port 2025
+    depends_on:
+      - mysql-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/crm_db
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - JWT_SECRET=YourSuperSecretKeyForThisCRMApplicationWhichIsVeryLongAndSecureAndBase64Encoded
+      - SPRING_MAIL_USERNAME=hemanthravada100@gmail.com
+      - SPRING_MAIL_PASSWORD=xgrx dxhx krjz wsuy
+    networks:
+      - crm-network
+
+  frontend:
+    build:
+      context: ./frontend
+      # Correction: Specify the Dockerfile name and location
+      dockerfile: frontend.Dockerfile
+    image: hemanth1845/crm-frontend
+    container_name: crm-frontend-container
+    ports:
+      - "5173:80" # Exposing frontend on host port 5173
+    depends_on:
+      - backend
+    networks:
+      - crm-network
+
+networks:
+  crm-network:
+    driver: bridge
+
+volumes:
+  mysql_data:
