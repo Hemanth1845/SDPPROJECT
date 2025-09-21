@@ -16,8 +16,8 @@ services:
 
   backend:
     build:
-      context: ./backend/CRMApplication # <-- UPDATED LINE
-      dockerfile: ../backend.Dockerfile   # <-- UPDATED LINE
+      context: ./backend/CRMApplication 
+      dockerfile: ../backend.Dockerfile   
     image: hemanth1845/crm-backend
     container_name: crm-backend-container
     ports:
