@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import styled from 'styled-components';
-import './style.css';
+import './style.css'
 
 const HomeContainer = styled.div`
   min-height: 100vh;
@@ -71,7 +71,7 @@ const Home = () => {
     <HomeContainer>
       <Navbar />
       <HeroSection>
-        <Title className='home'>CRM Project</Title>
+        <h1>CRM Project</h1>
         <Subtitle>
           Streamline your customer relationships with our powerful CRM solution.
           Manage contacts, track interactions, and boost your business growth.
