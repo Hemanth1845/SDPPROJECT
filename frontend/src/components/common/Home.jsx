@@ -71,7 +71,7 @@ const Home = () => {
     <HomeContainer>
       <Navbar />
       <HeroSection>
-        <h1>CRM Project</h1>
+        <h1 className='class'>CRM Project</h1>
         <Subtitle>
           Streamline your customer relationships with our powerful CRM solution.
           Manage contacts, track interactions, and boost your business growth.
