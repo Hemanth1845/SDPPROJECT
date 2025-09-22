@@ -77,15 +77,15 @@ public class AdminServiceImpl implements AdminService {
                "<body>" +
                "<div class='container'>" +
                "  <div class='header'>" +
-               "    <img src='https://i.imgur.com/QB3wY9A.png' alt='Account Approved'>" +
+               // **MODIFIED**: Using the new image link for account approval.
+               "    <img src='https://t4.ftcdn.net/jpg/14/67/59/79/240_F_1467597954_xDk60hyOse7gKb80oiEuhwzavp9Szpsb.jpg' alt='Account Approved'>" +
                "    <h1>Welcome Aboard!</h1>" +
                "  </div>" +
                "  <div class='content'>" +
                "    <p>Hello " + username + ",</p>" +
                "    <p>Great news! Your account with the Customer Management System has been reviewed and approved by an administrator. You can now log in and access your dashboard.</p>" +
                "    <div class='button-container'>" +
-               // **FIXED LINE**
-               "      <a href='http://localhost:4000/login' class='button'>Login to Your Account</a>" +
+               "      <a href='http://localhost:5173/login' class='button'>Login to Your Account</a>" +
                "    </div>" +
                "  </div>" +
                "  <div class='footer'>" +
@@ -158,10 +158,13 @@ public class AdminServiceImpl implements AdminService {
         String customerEmail = customer.getEmail();
         userRepository.delete(customer);
 
+        // **MODIFIED**: Using the new image link for account rejection.
         String htmlContent = "<html>"
         + "<body>"
         + "<h2>Account Update</h2>"
         + "<p>We regret to inform you that your registration for the CRM Portal has been rejected.</p>"
+        + "<img src='https://as2.ftcdn.net/jpg/16/89/36/13/1000_F_1689361346_oEbH0YOaWwkpPDqyttMbJ66hPCQ1siIM.jpg' "
+        + "alt='Rejected' width='400'/>"
         + "</body>"
         + "</html>";
         
