@@ -8,17 +8,24 @@ services:
     ports:
       - "3307:3306"
     volumes:
-      - mysql_data:/var/lib/mysql  #added here
+      - mysql_data:/var/lib/mysql
 
   backend:
     container_name: crm-backend-container
     build:
-      context: ./backend/CRMApplication 
-      dockerfile: ../backend.Dockerfile   
+      context: ./backend/CRMApplication
+      dockerfile: ../backend.Dockerfile
     ports:
       - "2025:2020"
     depends_on:
       - mysql-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql-db:3306/crm_db?createDatabaseIfNotExist=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - JWT_SECRET=YourSuperSecretKeyForThisCRMApplicationWhichIsVeryLongAndSecureAndBase64Encoded
+      - SPRING_MAIL_USERNAME=hemanthravada100@gmail.com
+      - SPRING_MAIL_PASSWORD=xgrx dxhx krjz wsuy
     restart: on-failure
 
   frontend:
