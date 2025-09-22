@@ -77,8 +77,8 @@ public class AdminServiceImpl implements AdminService {
                "<body>" +
                "<div class='container'>" +
                "  <div class='header'>" +
-               // **MODIFIED**: Using a professional and working image link
-               "    <img src='https://as1.ftcdn.net/v2/jpg/16/07/34/92/1000_F_1607349241_x3OKhb7Yk3A1pnz5zwf5GCASxyCVTPNE.jpg' alt='Account Approved'>" +
+               // **MODIFIED**: Using the new image link for account approval.
+               "    <img src='https://t4.ftcdn.net/jpg/14/67/59/79/240_F_1467597954_xDk60hyOse7gKb80oiEuhwzavp9Szpsb.jpg' alt='Account Approved'>" +
                "    <h1>Welcome Aboard!</h1>" +
                "  </div>" +
                "  <div class='content'>" +
@@ -158,11 +158,12 @@ public class AdminServiceImpl implements AdminService {
         String customerEmail = customer.getEmail();
         userRepository.delete(customer);
 
+        // **MODIFIED**: Using the new image link for account rejection.
         String htmlContent = "<html>"
         + "<body>"
         + "<h2>Account Update</h2>"
         + "<p>We regret to inform you that your registration for the CRM Portal has been rejected.</p>"
-        + "<img src='https://as1.ftcdn.net/v2/jpg/16/07/34/92/1000_F_1607349241_x3OKhb7Yk3A1pnz5zwf5GCASxyCVTPNE.jpg' "
+        + "<img src='https://as2.ftcdn.net/jpg/16/89/36/13/1000_F_1689361346_oEbH0YOaWwkpPDqyttMbJ66hPCQ1siIM.jpg' "
         + "alt='Rejected' width='400'/>"
         + "</body>"
         + "</html>";
@@ -178,7 +179,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public CustomerCampaign updateCustomerCampaignStatus(Long campaignId, String status) {
         CustomerCampaign campaign = customerCampaignRepository.findById(campaignId)
-            .orElseThrow(() -> new ResourceNotFoundException("Customer Campaign not found: " + campaignId));
+                .orElseThrow(() -> new ResourceNotFoundException("Customer Campaign not found: " + campaignId));
         
         campaign.setStatus(status.toUpperCase());
         campaign.setReviewedAt(LocalDateTime.now());
@@ -200,7 +201,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Interaction updateInteractionStatus(Long interactionId, String status) {
         Interaction interaction = interactionRepository.findById(interactionId)
-            .orElseThrow(() -> new ResourceNotFoundException("Interaction not found with id: " + interactionId));
+                .orElseThrow(() -> new ResourceNotFoundException("Interaction not found with id: " + interactionId));
 
         interaction.setStatus(status.toUpperCase());
         Interaction updatedInteraction = interactionRepository.save(interaction);
@@ -263,7 +264,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public EmailCampaign updateCampaign(Long id, EmailCampaign campaignDetails) {
         EmailCampaign campaign = emailCampaignRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Email Campaign not found: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Email Campaign not found: " + id));
         
         campaign.setName(campaignDetails.getName());
         campaign.setSubject(campaignDetails.getSubject());
@@ -282,7 +283,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public User getAdminProfile(String username) {
         return userRepository.findByUsername(username)
-            .orElseThrow(() -> new ResourceNotFoundException("Admin not found: " + username));
+                .orElseThrow(() -> new ResourceNotFoundException("Admin not found: " + username));
     }
 
     @Override
@@ -324,4 +325,3 @@ public class AdminServiceImpl implements AdminService {
         return settingsRepository.save(settings);
     }
 }
-
